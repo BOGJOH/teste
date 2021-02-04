@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Height Change</title>
+
+    <style>
+      html,
+      body,
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #96ceb4;
+        font-size: 16px;
+      }
+
+      .container {
+        height: 80vh;
+        border: 1px solid black;
+      }
+
+      .element {
+        background: #ffeead;
+        min-height: 10rem;
+        max-width: 30rem;
+        position: relative;
+        padding: 1rem;
+      }
+
+      .bottom-line {
+        height: 5px;
+        background: black;
+        position: absolute;
+        bottom: 1rem;
+        width: 92%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="element">
+        <div class="bottom-line"></div>
+      </div>
+    </div>
+
+    <script>
+      // declaration
+      const container = document.querySelectorAll(".container")[0];
+      changeHeight(container);
+
+      // function for changin height, taking container as argument
+      function changeHeight(container) {
+        // variables global inside the changeHeight function
+        let initialY, lastY;
+        // touchStart event function
+        function handleTouchStart(e) {
+          initialY = e.touches[0].clientY;
+          lastY = initialY;
+          console.log(initialY);
+        }
+
+        // touchStart event function
+        function handleTouchMove(e) {
+          element.style.height = parseInt(window.getComputedStyle(element).height) + (e.touches[0].clientY - lastY) + "px";
+
+          lastY = e.touches[0].clientY;
+        }
+
+        // touchEnd event function - NOT CALLED
+        function handleTouchEnd(e) {
+          console.log(e.changedTouches[0].clientY);
+        }
+
+        // cacheing all the other elements
+        const element = document.querySelectorAll(".element")[0];
+        const bottomLine = document.querySelectorAll(".bottom-line")[0];
+
+        // touchStart on the line
+        bottomLine.addEventListener("touchstart", handleTouchStart);
+        bottomLine.addEventListener("touchmove", handleTouchMove);
+        // bottomLine.addEventListener("touchend", handleTouchEnd);
+      }
+    </script>
+  </body>
+</html>

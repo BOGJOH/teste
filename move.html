@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Moving Circle</title>
+
+    <style>
+      html {
+        font-size: 16px;
+      }
+
+      body {
+        background: #96ceb4;
+      }
+
+      #circle {
+        background: #ffeead;
+        height: 10rem;
+        width: 10rem;
+        border-radius: 50%;
+
+        /* position: absolute;
+        top: 0;
+        left: 0; */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="circle"></div>
+
+    <script>
+      (function () {
+        // cursor object
+        let cursor = {
+          X: 0,
+          Y: 0,
+        };
+
+        // circle object -> declaration + initilisation
+        let circle = {
+          element: document.getElementById("circle"),
+        };
+
+        circle.element.style.position = "absolute";
+        circle.element.style.top = "10px";
+        circle.element.style.left = "10px";
+
+        circle.computedStyles = window.getComputedStyle(circle.element);
+        circle.initialX = parseInt(circle.computedStyles.top);
+        circle.initialY = parseInt(circle.computedStyles.left);
+        circle.currentX = circle.initialX;
+        circle.currentY = circle.initialY;
+
+        // listener for click or touch on the circle
+        circle.element.addEventListener("mousedown", handleStart);
+        circle.element.addEventListener("touchstart", handleStart);
+
+        // functions
+
+        function handleMove(e) {
+          e.preventDefault();
+
+          let movementX = 0,
+            movementY = 0;
+
+          // calculating movement
+          if (e.type === "touchmove") {
+            movementX = e.touches[0].clientX - cursor.X;
+            movementY = e.touches[0].clientY - cursor.Y;
+            // updating cursor position
+            cursor.X = e.touches[0].clientX;
+            cursor.Y = e.touches[0].clientY;
+          } else if (e.type === "mousemove") {
+            movementX = e.clientX - cursor.X;
+            movementY = e.clientY - cursor.Y;
+            // updating cursor position
+            cursor.X = e.clientX;
+            cursor.Y = e.clientY;
+          }
+
+          // updating circle position
+          circle.currentX += movementX;
+          circle.element.style.left = circle.currentX + "px";
+          circle.currentY += movementY;
+          circle.element.style.top = circle.currentY + "px";
+        }
+
+        function handleEnd(e) {
+          e.preventDefault();
+
+          circle.element.removeEventListener("mousemove", handleMove);
+          circle.element.removeEventListener("mouseup", handleEnd);
+          circle.element.removeEventListener("touchmove", handleMove);
+          circle.element.removeEventListener("touchend", handleEnd);
+        }
+
+        function handleStart(e) {
+          // get cursor position at click
+
+          e.preventDefault();
+
+          // mouse event
+          if (e.type === "mousedown") {
+            cursor.X = e.clientX;
+            cursor.Y = e.clientY;
+
+            // listener for move -> moving the circle
+            circle.element.addEventListener("mousemove", handleMove);
+            // listener for mouseup -> end of moving
+            circle.element.addEventListener("mouseup", handleEnd);
+          }
+          // touch event
+          else if (e.type === "touchstart") {
+            cursor.X = e.touches[0].clientX;
+            cursor.Y = e.touches[0].clientY;
+
+            circle.element.addEventListener("touchmove", handleMove);
+            circle.element.addEventListener("touchend", handleEnd);
+          }
+        }
+      })();
+    </script>
+  </body>
+</html>

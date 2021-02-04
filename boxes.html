@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teste</title>
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      #container {
+        width: 1500px;
+        margin: 0 auto;
+        border: solid 1px black;
+      }
+
+      .item,
+      .separator {
+        background-color: gray;
+        height: 200px;
+        display: flex;
+      }
+
+      .item:nth-child(odd) {
+        flex-direction: row;
+      }
+
+      .item:nth-child(odd) .text .bg {
+        left: 0;
+      }
+
+      .item:nth-child(even) {
+        flex-direction: row-reverse;
+      }
+
+      .item:nth-child(even) .text .bg {
+        right: 0;
+      }
+
+      .item:nth-child(4n + 1) .text .bg {
+        transform: skewX(10deg) translateX(-18px);
+      }
+
+      .item:nth-child(4n + 2) .text .bg {
+        transform: skewX(10deg) translateX(+18px);
+      }
+
+      .item:nth-child(4n + 3) {
+        width: calc(100% + 4 * 18px);
+      }
+
+      .item:nth-child(4n + 3) .text .bg {
+        transform: skewX(-10deg) translateX(-18px);
+        opacity: 0.5;
+      }
+
+      .item:nth-child(4n + 0) {
+        width: calc(100% + 4 * 18px);
+        position: relative;
+        left: calc(-4 * 18px);
+      }
+
+      .item:nth-child(4n + 0) .text .bg {
+        transform: skewX(-10deg) translateX(+18px);
+        opacity: 0.5;
+      }
+
+      .image {
+        background-color: paleturquoise;
+        width: 50%;
+      }
+
+      .text {
+        background-color: red;
+        width: 50%;
+        position: relative;
+      }
+
+      .text .bg {
+        background-color: palevioletred;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 110%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="main">
+        <div class="item">
+          <div class="image"></div>
+          <div class="text">
+            <div class="bg"></div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="image"></div>
+          <div class="text">
+            <div class="bg"></div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="image"></div>
+          <div class="text">
+            <div class="bg"></div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="image"></div>
+          <div class="text">
+            <div class="bg"></div>
+          </div>
+        </div>
+
+        <!-- <div class="separator">
+          <div class="image"></div>
+          <div class="text">
+            <div class="bg"></div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
